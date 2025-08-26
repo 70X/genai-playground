@@ -1,6 +1,6 @@
 # GenAI Playground
 
-A **hands-on generative AI playground** for experimenting with **text, image, 3D models, audio, and video**. Built with **Python, FastAPI, and Streamlit**, it’s designed for rapid experimentation and learning.
+A **hands-on generative AI playground** for experimenting with **text, image, 3D models, audio, and video**. Built with **Python, FastAPI, and Streamlit**, it's designed for rapid experimentation and learning.
 
 ---
 
