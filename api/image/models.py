@@ -20,3 +20,6 @@ def generate_image(pipe: DiffusionPipeline, prompt: str) -> Image.Image:
     # the more inference steps the better the final image is. For testing purpose we reduce it to 10 here
     output = pipe(prompt, num_inference_steps=10).images[0]
     return output
+
+
+# this is a leftover
