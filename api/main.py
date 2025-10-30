@@ -1,28 +1,28 @@
 from typing import AsyncIterator
 from fastapi import FastAPI
 from fastapi.concurrency import asynccontextmanager
-from text.models import generate_text, load_text_model
 from fastapi import status
-from audio.schemas import VoicePresets
 from fastapi.responses import StreamingResponse
-from audio.models import generate_audio, load_audio_model
-from audio.utils import audio_array_to_buffer
 from fastapi import Response
-from image.models import generate_image, load_image_model
-from image.utils import img_to_bytes
 from fastapi import File
 from io import BytesIO
 from PIL import Image
-from video.models import generate_video, load_video_model
-from video.utils import export_to_video_buffer
-from mesh3d.models import generate_3d_geometry, load_3d_model
-from mesh3d.utils import mesh_to_obj_buffer
 import csv
 import time
 from datetime import datetime, timezone
 from uuid import uuid4
 from typing import Awaitable, Callable
 from fastapi import Request
+from .text.models import generate_text
+from .audio.schemas import VoicePresets
+from .audio.models import generate_audio
+from .audio.utils import audio_array_to_buffer
+from .image.models import generate_image, load_image_model
+from .image.utils import img_to_bytes, save_image
+from .video.models import generate_video
+from .video.utils import export_to_video_buffer
+from .mesh3d.models import generate_3d_geometry
+from .mesh3d.utils import mesh_to_obj_buffer
 
 app = FastAPI()
 models = {}
@@ -30,11 +30,11 @@ models = {}
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
-    models["text2text"] = load_text_model()
+    # models["text2text"] = load_text_model()
     models["text2image"] = load_image_model()
-    models["text2audio"] = load_audio_model()
-    models["image2video"] = load_video_model()
-    models["text2threed"] = load_3d_model()
+    # models["text2audio"] = load_audio_model()
+    # models["image2video"] = load_video_model()
+    # models["text2threed"] = load_3d_model()
 
     yield
 
@@ -112,6 +112,8 @@ def serve_text_to_audio_model_controller(
 )
 def serve_text_to_image_model_controller(prompt: str):
     output = generate_image(models["text2image"], prompt)
+    rand = str(uuid4().hex)[:8]
+    save_image(output, f"output/text2image_{rand}.png")
     return Response(content=img_to_bytes(output), media_type="image/png")
 
 

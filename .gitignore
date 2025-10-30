@@ -9,3 +9,4 @@ usage.csv
 
 # Virtual environments
 .venv
+api/output
