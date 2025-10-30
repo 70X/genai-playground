@@ -1,0 +1,5 @@
+# https://developers.google.com/gemini-code-assist/docs/customize-gemini-behavior-github
+have_fun: false # Just review the code
+code_review:
+  pull_request_opened:
+    summary: false # Don't summarize the PR in a separate comment
